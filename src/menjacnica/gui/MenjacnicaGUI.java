@@ -24,6 +24,8 @@ import javax.swing.JPopupMenu;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JMenuItem;
 import javax.swing.ImageIcon;
@@ -92,6 +94,11 @@ public class MenjacnicaGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public MenjacnicaGUI() {
+		addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent arg0) {
+				ugasiAplikaciju();
+			}
+		});
 		setIconImage(Toolkit.getDefaultToolkit().getImage(MenjacnicaGUI.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
 		setTitle("Menjacnica");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -174,6 +181,11 @@ public class MenjacnicaGUI extends JFrame {
 	private JButton getBtnNewButton() {
 		if (btnNewButton == null) {
 			btnNewButton = new JButton("Dodaj kurs");
+			btnNewButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					prikaziDodajKursProzor();
+				}
+			});
 			btnNewButton.setPreferredSize(new Dimension(99, 23));
 		}
 		return btnNewButton;
@@ -337,7 +349,7 @@ public class MenjacnicaGUI extends JFrame {
 				"Da li ZAISTA zelite da izadjete iz apliacije", "Izlazak",
 				JOptionPane.YES_NO_CANCEL_OPTION);
 
-		if (opcija == JOptionPane.YES_NO_CANCEL_OPTION)
+		if (opcija == JOptionPane.YES_OPTION)
 			System.exit(0);
 	}
 
@@ -355,4 +367,9 @@ public class MenjacnicaGUI extends JFrame {
 		}
 		return mntmAbout;
 	}
-}
+	
+	private void prikaziDodajKursProzor() {
+		DodajKursGUI prozor = new DodajKursGUI ();
+		prozor.setLocationRelativeTo(contentPane);
+		prozor.setVisible(true);
+}}
